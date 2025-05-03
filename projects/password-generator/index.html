@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecurePass Pro | Professional Password Generator</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- PDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header section -->
+    <header class="app-header">
+      <h1 class="app-title"><i class="fas fa-shield-alt"></i> SecurePass Pro</h1>
+      <div class="app-controls">
+        <button class="btn btn-secondary" onclick="toggleDarkMode()" title="Toggle theme">
+          <i id="themeIcon" class="fas fa-moon"></i>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Main content -->
+    <main class="app-content">
+      <section class="input-section">
+        <h2>Generate Secure Passwords</h2>
+        <p>Create strong, unique passwords tailored to your needs</p>
+        
+        <!-- Password base input -->
+        <div class="form-group">
+          <label for="basePassword">Base Password (Optional)</label>
+          <input 
+            type="text" 
+            id="basePassword" 
+            placeholder="Enter a starting point or leave blank for fully random passwords"
+            autocomplete="off"
+          />
+          
+          <!-- Strength meter -->
+          <div id="strengthMeter">
+            <div id="strengthBar"></div>
+          </div>
+          <span id="strengthText">Strength: N/A</span>
+          
+          <!-- Strength details -->
+          <div id="strengthDetails">
+            <ul id="strengthDetailsList"></ul>
+          </div>
+        </div>
+        
+        <!-- Password options -->
+        <div class="input-row">
+          <div class="form-group">
+            <label for="quantity">Number of Passwords</label>
+            <select id="quantity">
+              <option value="1">1 password</option>
+              <option value="5" selected>5 passwords</option>
+              <option value="10">10 passwords</option>
+              <option value="20">20 passwords</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="length">Password Length</label>
+            <input 
+              type="number" 
+              id="length" 
+              min="8" 
+              max="64" 
+              value="12"
+            />
+          </div>
+        </div>
+        
+        <!-- Character options -->
+        <div class="form-group">
+          <label>Character Types</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="useUppercase" checked />
+              <label for="useUppercase">Uppercase (A-Z)</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="useLowercase" checked />
+              <label for="useLowercase">Lowercase (a-z)</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="useNumbers" checked />
+              <label for="useNumbers">Numbers (0-9)</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="useSymbols" checked />
+              <label for="useSymbols">Symbols (!@#$%)</label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Advanced options -->
+        <div class="form-group">
+          <label>Advanced Options</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="avoidAmbiguous" checked />
+              <label for="avoidAmbiguous">Avoid ambiguous characters (Il1O0)</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="enhanceBase" checked />
+              <label for="enhanceBase">Enhance base password (if provided)</label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Generate button -->
+        <div class="btn-group">
+          <button id="generateBtn" class="btn" onclick="generatePasswords()">
+            <i class="fas fa-key"></i> Generate Passwords
+          </button>
+        </div>
+      </section>
+      
+      <!-- Results section -->
+      <section id="output"></section>
+      
+      <!-- Bulk actions -->
+      <section id="bulkActions">
+        <h3>Export Options</h3>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="copyAllPasswords()">
+            <i class="fas fa-copy"></i> Copy All
+          </button>
+          <button class="btn btn-secondary" onclick="downloadPDF()">
+            <i class="fas fa-file-pdf"></i> Export as PDF
+          </button>
+          <button class="btn btn-secondary" onclick="exportTXT()">
+            <i class="fas fa-file-alt"></i> Export as TXT
+          </button>
+        </div>
+      </section>
+    </main>
+    
+    <!-- Footer with developer info -->
+    <footer class="app-footer">
+      <p>Developed by Upendra Khanal</p>
+    </footer>
+  </div>
+  
+  <!-- Notification element -->
+  <div id="notification"></div>
+
+  
+  <!-- Custom scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
