@@ -13,6 +13,26 @@
   --transition: all 0.3s ease;
 }
 
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  max-width: 100%;
+  width: 100%;
+  padding: 0 1rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+
 /* Light Theme Variables */
 .light-theme {
   --bg-dark: #f7f9fc;
