@@ -1,9 +1,9 @@
-name: 🚀 Deploy static site to GitHub Pages
+name: 🚀 Deploy portfolio to GitHub Pages
 
 on:
   push:
     branches:
-      - main    # or replace with your default branch
+      - main   # change if your default branch is different
 
 permissions:
   contents: read
@@ -17,14 +17,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Copy site into root
+        run: |
+          # copy index.html, CSS, JS, etc. into /
+          cp -R portfolio_code/* .
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: portfolio_code/*    # ← everything inside your folder
+          # deploy everything at the repo root
+          path: .
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
