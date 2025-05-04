@@ -19,5 +19,6 @@ Welcome to my personal portfolio website! This site showcases my projects, resea
 ## 📬 Contact
 Feel free to reach out via [Email](mailto:upendrakhanal2006@gmail.com) or connect on [LinkedIn](https://www.linkedin.com/in/upendra-khanal-a86692350).
 
+---
 
- Designed and developed by **Upendra Khanal** — Learning Web Developer & AI Enthusiast from Nepal.
+> Designed and developed by **Upendra Khanal** — Learning Web Developer & AI Enthusiast from Nepal.
