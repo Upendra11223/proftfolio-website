@@ -3,24 +3,36 @@ name: 🚀 Deploy portfolio to GitHub Pages
 on:
   push:
     branches:
-      - main   # change if your default branch is different
+      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
-  pages:   write
+  pages: write
   id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Copy site into root
+      - name: Prepare Pages site
         run: |
-          # copy index.html, CSS, JS, etc. into /
-          cp -R portfolio_code/* .
+          set -e
+          mkdir -p _site
+          cp -R portfolio_code/. _site/
+          cp -R assets _site/assets
+          cp -R projects _site/projects
+          cp CNAME _site/CNAME
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -28,10 +40,8 @@ jobs:
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # deploy everything at the repo root
-          path: .
+          path: ./_site
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
