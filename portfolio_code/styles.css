@@ -231,6 +231,14 @@ nav .container {
   width: 100%;
 }
 
+.nav-links a.active {
+  color: var(--primary-color);
+}
+
+.nav-links a.active::after {
+  width: 100%;
+}
+
 .theme-toggle, .mobile-menu-btn {
   background: none;
   border: none;
@@ -808,4 +816,67 @@ footer {
 
 .in-view.scroll-up {
   animation: fadeInUp 0.8s ease forwards;
+}
+
+/* ===== TYPEWRITER CURSOR ===== */
+@keyframes blinkCursor {
+  0%, 100% {
+    border-right-color: var(--primary-color);
+  }
+  50% {
+    border-right-color: transparent;
+  }
+}
+
+/* ===== BACK TO TOP BUTTON ===== */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 200, 150, 0.3);
+  z-index: 99;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 200, 150, 0.4);
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-fade,
+  .scroll-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
