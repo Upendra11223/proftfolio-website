@@ -13,8 +13,16 @@
 <meta property="og:url" content="https://upendrakhanal.com.np">
 <meta name="twitter:card" content="summary_large_image">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0e101c"/>
   <title>Upendra Khanal | Portfolio</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/profile.jpg"/>
+  <link rel="apple-touch-icon" href="assets/images/profile.jpg"/>
   <link rel="stylesheet" href="styles.css"/>
+  <noscript>
+    <style>
+      .scroll-fade, .scroll-up { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
@@ -22,7 +30,7 @@
 <header>
   <div class="container">
     <div class="profile-container">
-      <img class="profile-img" src="assets/images/profile.jpg" alt="Upendra Khanal"/>
+      <img class="profile-img" src="assets/images/profile.jpg" alt="Upendra Khanal" width="160" height="160"/>
       <h1>Upendra Khanal</h1>
      <p><span class="typewriter-text">Learning Web Developer & AI Enthusiast </span></p>
       <div class="social-links">
@@ -157,7 +165,7 @@
       <div class="projects-grid scroll-up" style="gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); justify-content: center;">
         <div class="project-card">
           <div class="project-img">
-            <img src="assets/images/flappy-bird.jpg" alt="Flappy Bird Game"/>
+            <img src="assets/images/flappy-bird.jpg" alt="Flappy Bird Game" loading="lazy" decoding="async"/>
           </div>
           <div class="project-content">
             <h3>Flappy Bird Professional Edition</h3>
@@ -174,7 +182,7 @@
         </div>
         <div class="project-card">
           <div class="project-img">
-            <img src="assets/images/password-generator.jpg" alt="Password Generator"/>
+            <img src="assets/images/password-generator.jpg" alt="Password Generator" loading="lazy" decoding="async"/>
           </div>
           <div class="project-content">
             <h3>Password Generator</h3>
@@ -230,7 +238,7 @@ multi-AI use, comparing models like Claude, Gemini, and DeepSeek</p>
         </div>
         <div class="publication-card">
           <h3>AI in Architecture: Smarter and Faster Building Designs</h3>
-          <p class="publication-date">Augsut 3, 2025</p>
+          <p class="publication-date">August 3, 2025</p>
           <p class="publication-authors">Upendra Khanal</p>
           <p class="publication-authors">Laxmi Khanal</p>
           <p class="publication-abstract">This paper explores the transformative role of artificial intelligence (AI), particularly large language models (LLMs) and generative design tools, in revolutionizing architectural design for construction. It highlights how AI-driven systems can automate design processes, reduce human error, and create optimized 3D models faster and more efficiently than traditional methods.
@@ -329,6 +337,10 @@ This work is intended for researchers, architects, and technologists interested 
     </div>
   </div>
 </footer>
+<!-- Back to Top Button -->
+<button class="back-to-top" aria-label="Back to top" title="Back to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
 <script src="script.js"></script>
 </body>
 </html>
