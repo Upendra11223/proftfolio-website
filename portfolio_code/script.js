@@ -143,6 +143,25 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('scroll', highlightNavOnScroll);
   highlightNavOnScroll();
 
+  // ========== BACK TO TOP BUTTON ==========
+  const backToTopBtn = document.querySelector('.back-to-top');
+  if (backToTopBtn) {
+    const toggleBackToTop = () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    };
+
+    window.addEventListener('scroll', toggleBackToTop);
+    toggleBackToTop();
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // ========== ENHANCED TYPEWRITER EFFECT ==========
   function typeWriterEffect(element, text, speed = 75) {
     let i = 0;
