@@ -7,7 +7,7 @@ Personal portfolio of **Upendra Khanal** — BSc.IT student, web developer and A
 ## Stack
 
 - Plain HTML / CSS / JavaScript — no frameworks, no build step
-- "Editorial paper" design: Fraunces + Space Grotesk + JetBrains Mono, light/dark theme
+- Inter + system fonts, light/dark theme, scroll reveals, cursor spotlight
 - Deployed to GitHub Pages via GitHub Actions (`.github/workflows/pages.yml`)
 
 ## Structure
@@ -15,7 +15,7 @@ Personal portfolio of **Upendra Khanal** — BSc.IT student, web developer and A
 ```
 index.html      — the site
 styles.css      — design system
-script.js       — theme toggle, reveal animations, Nepal clock
+script.js       — theme toggle, scroll reveals, cursor spotlight
 404.html        — custom not-found page
 assets/         — images & résumé
 projects/       — live project demos (Flappy Bird, Password Generator)
