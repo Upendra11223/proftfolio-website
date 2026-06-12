@@ -1,24 +1,36 @@
-# Upendra Khanal | Personal Portfolio Website
+# upendrakhanal.com.np
 
-Welcome to my personal portfolio website! This site showcases my projects, research publications, and skills in web development, AI, and software engineering.
+Personal portfolio of **Upendra Khanal** — BSc.IT student, web developer and AI researcher from Bharatpur, Nepal.
 
-## 🔗 Live Website
-[Visit Now](https://upendrakhanal.com.np)
+**Live site → [upendrakhanal.com.np](https://upendrakhanal.com.np)**
 
-## 🚀 Tech Stack
-- **HTML5, CSS3, JavaScript**
-- Responsive layout
-- Dark mode toggle
-- Interactive sections (About, Skills, Projects, Publications, Contact)
+## Stack
 
-## 📌 Features
-- **Flappy Bird Pro Edition** – A polished HTML5 game with particle effects and responsive UI.
-- **Password Generator** – Secure, smart password generation using name + base input.
-- **AI-focused Research Publications** – Including prompt engineering and utility of ChatGPT.
+- Plain HTML / CSS / JavaScript — no frameworks, no build step
+- "Editorial paper" design: Fraunces + Space Grotesk + JetBrains Mono, light/dark theme
+- Deployed to GitHub Pages via GitHub Actions (`.github/workflows/pages.yml`)
 
-## 📬 Contact
-Feel free to reach out via [Email](mailto:upendrakhanal2006@gmail.com) or connect on [LinkedIn](https://www.linkedin.com/in/upendra-khanal-a86692350).
+## Structure
 
----
+```
+index.html      — the site
+styles.css      — design system
+script.js       — theme toggle, reveal animations, Nepal clock
+404.html        — custom not-found page
+assets/         — images & résumé
+projects/       — live project demos (Flappy Bird, Password Generator)
+```
 
-> Designed and developed by **Upendra Khanal** — Learning Web Developer & AI Enthusiast from Nepal.
+## Run locally
+
+Any static server works:
+
+```
+python -m http.server 8000
+```
+
+Then open http://localhost:8000
+
+## Contact
+
+[Email](mailto:upendrakhanal2006@gmail.com) · [LinkedIn](https://www.linkedin.com/in/upendra-khanal-a86692350) · [GitHub](https://github.com/Upendra11223)
