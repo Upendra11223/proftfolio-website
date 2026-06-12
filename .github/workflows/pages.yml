@@ -1,4 +1,4 @@
-name: 🚀 Deploy portfolio to GitHub Pages
+name: Deploy portfolio to GitHub Pages
 
 on:
   push:
@@ -29,10 +29,9 @@ jobs:
         run: |
           set -e
           mkdir -p _site
-          cp -R portfolio_code/. _site/
+          cp index.html styles.css script.js 404.html CNAME .nojekyll robots.txt sitemap.xml _site/
           cp -R assets _site/assets
           cp -R projects _site/projects
-          cp CNAME _site/CNAME
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

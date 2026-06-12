@@ -14,7 +14,8 @@
     let bird = {};
     let pipes = [];
     let score = 0;
-    let highScore = 0; // No localStorage, just use variable
+    let highScore = 0;
+    try { highScore = parseInt(localStorage.getItem("flappyHighScore"), 10) || 0; } catch (e) {}
     let frame = 0;
     let dayNightCycle = 0;
     let groundX = 0;
@@ -57,9 +58,9 @@
       PIPE_SPEED = Math.max(2 * scaleFactor, 1.5); // Ensure minimum speed
       GROUND_HEIGHT = Math.floor(80 * scaleFactor);
 
-      // Only reinitialize if game is already in progress
-      if (gameState === "playing") {
-        initGame();
+      // Keep the current run alive on resize — just clamp the bird back on screen
+      if (gameState === "playing" && bird.y) {
+        bird.y = Math.min(Math.max(bird.y, BIRD_SIZE), canvas.height - GROUND_HEIGHT - BIRD_SIZE);
       }
     }
 
@@ -75,14 +76,55 @@
       };
       
       pipes = [];
+      particles = [];
       score = 0;
       frame = 0;
       dayNightCycle = 0;
       groundX = 0;
       lastPipeTime = 0;
-      
+
       // Add initial pipe
       addPipe();
+    }
+
+    // Lightweight particle system: flap puffs, score sparkles, crash bursts
+    let particles = [];
+
+    function spawnParticles(x, y, color, count, speed) {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const v = (Math.random() * 0.6 + 0.4) * speed;
+        particles.push({
+          x: x, y: y,
+          vx: Math.cos(angle) * v,
+          vy: Math.sin(angle) * v,
+          life: 1,
+          size: Math.random() * 4 + 2,
+          color: color
+        });
+      }
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx * deltaTime * 60;
+        p.y += p.vy * deltaTime * 60;
+        p.vy += 0.08 * deltaTime * 60;
+        p.life -= 0.03 * deltaTime * 60;
+        if (p.life <= 0) particles.splice(i, 1);
+      }
+    }
+
+    function drawParticles() {
+      particles.forEach(function(p) {
+        ctx.globalAlpha = Math.max(p.life, 0);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
     }
 
     function addPipe() {
@@ -158,8 +200,9 @@
       ctx.strokeStyle = '#A0522D';
       ctx.lineWidth = 3;
       const patternSpace = canvas.width / 20; // Adaptive pattern spacing
+      const offset = groundX % patternSpace;
       for (let i = -patternSpace; i < canvas.width + patternSpace; i += patternSpace) {
-        const x = (i + groundX) % canvas.width;
+        const x = i - offset;
         ctx.beginPath();
         ctx.moveTo(x, canvas.height - GROUND_HEIGHT);
         ctx.lineTo(x - (patternSpace/2), canvas.height);
@@ -248,7 +291,7 @@
       
       frame++;
       dayNightCycle += 0.1;
-      groundX = (groundX + PIPE_SPEED) % 20;
+      groundX = (groundX + PIPE_SPEED * deltaTime * 60) % 100000;
       
       // Update bird with delta time for consistent physics
       bird.velocity += bird.gravity * deltaTime * 60;
@@ -265,29 +308,33 @@
         return;
       }
       
+      updateParticles();
+
       // Update pipes
       for (let i = pipes.length - 1; i >= 0; i--) {
         const pipe = pipes[i];
         pipe.x -= PIPE_SPEED * deltaTime * 60;
-        
-        // Collision detection
+
+        // Collision detection (hitbox slightly smaller than the sprite — feels fairer)
+        const hit = BIRD_SIZE * 0.4;
         if (
-          bird.x + BIRD_SIZE/2 > pipe.x && 
-          bird.x - BIRD_SIZE/2 < pipe.x + PIPE_WIDTH &&
-          (bird.y - BIRD_SIZE/2 < pipe.y || bird.y + BIRD_SIZE/2 > pipe.y + PIPE_GAP)
+          bird.x + hit > pipe.x &&
+          bird.x - hit < pipe.x + PIPE_WIDTH &&
+          (bird.y - hit < pipe.y || bird.y + hit > pipe.y + PIPE_GAP)
         ) {
           gameOver();
           return;
         }
-        
+
         // Scoring
         if (!pipe.passed && pipe.x + PIPE_WIDTH < bird.x) {
           score++;
           pipe.passed = true;
-          
+
           // Play score sound
           playSound('score');
-          
+          spawnParticles(bird.x, bird.y, '#FFD700', 10, 2.5);
+
           // Update high score
           if (score > highScore) {
             highScore = score;
@@ -311,10 +358,13 @@
 
     function gameOver() {
       gameState = "gameover";
-      
+
       // Play game over sound
       playSound('gameover');
-      
+      spawnParticles(bird.x, bird.y, '#E74C3C', 24, 4);
+
+      try { localStorage.setItem("flappyHighScore", String(highScore)); } catch (e) {}
+
       finalScoreDisplay.textContent = score;
       highScoreDisplay.textContent = highScore;
       gameOverScreen.classList.add("visible");
@@ -324,41 +374,89 @@
       if (gameState === "playing") {
         bird.velocity = bird.jump;
         isJumping = true;
-        
+
         // Play jump sound
         playSound('jump');
+        spawnParticles(bird.x + BIRD_SIZE * 0.4, bird.y + BIRD_SIZE * 0.3, 'rgba(255,255,255,0.8)', 4, 1.5);
       }
     }
 
-    // Sound effects (placeholder functions - you'll need to add actual sounds)
+    // Sound effects — tiny synth beeps via WebAudio, no audio files needed
+    let audioCtx = null;
     function playSound(type) {
-      // In a real implementation, you would create Audio objects here
-      // For now, just log to console for debugging
-      console.log("Playing sound:", type);
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+        if (type === 'jump') {
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(420, now);
+          osc.frequency.exponentialRampToValueAtTime(680, now + 0.08);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+          osc.start(now); osc.stop(now + 0.12);
+        } else if (type === 'score') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.setValueAtTime(1320, now + 0.08);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+          osc.start(now); osc.stop(now + 0.2);
+        } else if (type === 'gameover') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(300, now);
+          osc.frequency.exponentialRampToValueAtTime(80, now + 0.4);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+          osc.start(now); osc.stop(now + 0.45);
+        }
+      } catch (e) { /* audio blocked — game still works silently */ }
     }
 
     function gameLoop(timestamp) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       updateGame(timestamp);
-      
+
       // Draw all elements
       drawBackground();
       drawPipes();
       drawGround();
+      drawParticles();
       drawBird();
-      
+
       if (gameState === "playing") {
         drawScore();
       }
-      
+
+      if (gameState === "paused") {
+        drawScore();
+        ctx.fillStyle = 'rgba(0,0,0,0.55)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        const fs = Math.max(14, Math.floor(canvas.width / 18));
+        ctx.font = `bold ${fs}px "Press Start 2P", Arial`;
+        ctx.fillText('PAUSED', canvas.width / 2, canvas.height / 2 - fs);
+        ctx.font = `${Math.floor(fs * 0.6)}px "Press Start 2P", Arial`;
+        ctx.fillText('tap to resume', canvas.width / 2, canvas.height / 2 + fs);
+      }
+
       animationFrameId = requestAnimationFrame(gameLoop);
     }
 
     // Event listeners
     function handleInteraction(e) {
       e.preventDefault(); // Prevent default browser behavior
-      
+
+      if (gameState === "paused") {
+        gameState = "playing"; // resume after tab switch
+        return;
+      }
       if (gameState === "playing") {
         jump();
       }
@@ -394,8 +492,12 @@
 
       // Keyboard input (good for laptops)
       window.addEventListener('keydown', function(e) {
-        if ((e.code === 'Space' || e.key === ' ' || e.key === 'ArrowUp') && gameState === "playing") {
-          jump();
+        if (e.code === 'Space' || e.key === ' ' || e.key === 'ArrowUp') {
+          if (gameState === "paused") {
+            gameState = "playing"; // resume after tab switch
+          } else if (gameState === "playing") {
+            jump();
+          }
           e.preventDefault(); // Prevent page scrolling
         }
       });

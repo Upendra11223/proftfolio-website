@@ -15,6 +15,22 @@ const CONFIG = {
 };
 
 /**
+ * Cryptographically secure random integer in [0, max)
+ * Uses rejection sampling to avoid modulo bias.
+ * @param {number} max - Exclusive upper bound
+ * @return {number} Random integer
+ */
+function randInt(max) {
+  if (window.crypto && window.crypto.getRandomValues) {
+    const limit = Math.floor(0x100000000 / max) * max;
+    const buf = new Uint32Array(1);
+    do { window.crypto.getRandomValues(buf); } while (buf[0] >= limit);
+    return buf[0] % max;
+  }
+  return Math.floor(Math.random() * max); // last-resort fallback
+}
+
+/**
  * Calculates password strength and updates the strength meter
  */
 function updateStrengthMeter() {
@@ -132,7 +148,9 @@ function generatePasswords() {
   // Get input values
   const input = document.getElementById("basePassword").value.trim();
   const quantity = parseInt(document.getElementById("quantity").value);
-  const length = parseInt(document.getElementById("length").value) || CONFIG.MIN_LENGTH;
+  const lengthInput = document.getElementById("length");
+  const length = Math.min(64, Math.max(8, parseInt(lengthInput.value) || CONFIG.MIN_LENGTH));
+  lengthInput.value = length; // reflect the clamped value back to the field
   const options = getPasswordOptions();
   
   // Prepare output container
@@ -202,8 +220,7 @@ function createPasswordElement(password, index) {
   copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
   copyBtn.title = "Copy to clipboard";
   copyBtn.onclick = () => {
-    navigator.clipboard.writeText(password);
-    showNotification("Password copied to clipboard!");
+    copyText(password, "Password copied to clipboard!");
   };
   container.appendChild(copyBtn);
   
@@ -234,28 +251,34 @@ function getPasswordOptions() {
  */
 function createPassword(baseInput, targetLength, options) {
   let password = "";
-  
+
   // Start with the base input if provided
   if (baseInput) {
     // Apply enhanced base password with randomness
     password = options.enhanceBase ? enhanceBasePassword(baseInput, targetLength) : baseInput;
-  }
-  
-  // Generate a completely random password if no base or too short
-  if (!password || password.length < targetLength) {
+
+    // Pad a short base with random characters instead of throwing it away
+    if (password.length < targetLength) {
+      password += generateRandomPassword(targetLength - password.length, options);
+    }
+  } else {
     password = generateRandomPassword(targetLength, options);
   }
-  
+
   // Ensure length is correct (truncate if too long)
   if (password.length > targetLength) {
     password = password.substring(0, targetLength);
   }
-  
-  // Replace ambiguous characters if needed
+
+  // Swap each ambiguous character for a fresh random unambiguous one
+  // (replacing them all with "#" created repeated runs and weakened the password)
   if (options.avoidAmbiguous) {
-    password = password.replace(CONFIG.AMBIGUOUS, CONFIG.REPLACEMENT_CHAR);
+    const safe = (CONFIG.LOWERCASE + CONFIG.UPPERCASE + CONFIG.NUMBERS).replace(CONFIG.AMBIGUOUS, "");
+    password = password.replace(CONFIG.AMBIGUOUS, function () {
+      return safe[randInt(safe.length)];
+    });
   }
-  
+
   return password;
 }
 
@@ -296,7 +319,7 @@ function enhanceBasePassword(base, targetLength) {
 function shuffleString(str) {
   const arr = str.split('');
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = randInt(i + 1);
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr.join('');
@@ -318,12 +341,10 @@ function getRandomChars(length) {
 
   for (let i = 0; i < length; i++) {
     // Select a random character type
-    const typeIndex = Math.floor(Math.random() * charTypes.length);
-    const charSet = charTypes[typeIndex];
-    
+    const charSet = charTypes[randInt(charTypes.length)];
+
     // Select a random character from the chosen type
-    const charIndex = Math.floor(Math.random() * charSet.length);
-    result += charSet[charIndex];
+    result += charSet[randInt(charSet.length)];
   }
 
   return result;
@@ -336,39 +357,78 @@ function getRandomChars(length) {
  * @return {string} The generated password
  */
 function generateRandomPassword(length, options) {
-  let charPool = "";
-  
-  // Build character pool based on selected options
-  if (options.useLowercase) charPool += CONFIG.LOWERCASE;
-  if (options.useUppercase) charPool += CONFIG.UPPERCASE;
-  if (options.useNumbers) charPool += CONFIG.NUMBERS;
-  if (options.useSymbols) charPool += CONFIG.SYMBOLS;
-  
+  // Build the list of selected character sets
+  let sets = [];
+  if (options.useLowercase) sets.push(CONFIG.LOWERCASE);
+  if (options.useUppercase) sets.push(CONFIG.UPPERCASE);
+  if (options.useNumbers) sets.push(CONFIG.NUMBERS);
+  if (options.useSymbols) sets.push(CONFIG.SYMBOLS);
+
   // Default to lowercase if nothing selected
-  if (!charPool) charPool = CONFIG.LOWERCASE;
-  
-  // Generate the password
-  let password = "";
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * charPool.length);
-    password += charPool[randomIndex];
+  if (sets.length === 0) sets = [CONFIG.LOWERCASE];
+
+  // Strip ambiguous characters from the pool up front
+  if (options.avoidAmbiguous) {
+    sets = sets.map(s => s.replace(CONFIG.AMBIGUOUS, ""));
   }
-  
-  return password;
+
+  // Guarantee at least one character from every selected set,
+  // then fill the rest from the combined pool and shuffle
+  const chars = [];
+  if (length >= sets.length) {
+    sets.forEach(s => chars.push(s[randInt(s.length)]));
+  }
+
+  const pool = sets.join("");
+  while (chars.length < length) {
+    chars.push(pool[randInt(pool.length)]);
+  }
+
+  return shuffleString(chars.join(""));
 }
 
 /**
  * Shows a notification message to the user
  * @param {string} message - The message to display
  */
+let notificationTimer = null;
 function showNotification(message) {
   const notification = document.getElementById("notification");
   notification.textContent = message;
   notification.classList.add("show");
-  
-  setTimeout(() => {
+
+  clearTimeout(notificationTimer);
+  notificationTimer = setTimeout(() => {
     notification.classList.remove("show");
   }, 3000);
+}
+
+/**
+ * Copies text to the clipboard with a fallback, and only reports
+ * success when the copy actually worked
+ * @param {string} text - Text to copy
+ * @param {string} message - Success notification message
+ */
+function copyText(text, message) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => showNotification(message))
+      .catch(() => showNotification("Copy failed — please copy manually"));
+  } else {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      showNotification(message);
+    } catch (e) {
+      showNotification("Copy failed — please copy manually");
+    }
+    document.body.removeChild(ta);
+  }
 }
 
 /**
@@ -457,10 +517,7 @@ function copyAllPasswords() {
     return showNotification("Please generate passwords first");
   }
   
-  const content = passwords.join("\n");
-  navigator.clipboard.writeText(content);
-  
-  showNotification("All passwords copied to clipboard");
+  copyText(passwords.join("\n"), "All passwords copied to clipboard");
 }
 
 /**

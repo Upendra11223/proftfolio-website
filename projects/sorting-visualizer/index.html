@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorting Visualizer</title>
+  <meta name="description" content="Watch sorting algorithms work step by step — bubble, insertion, selection, merge and quick sort. Built with plain JavaScript by Upendra Khanal.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Sorting Visualizer</h1>
+      <p>Watch five classic algorithms sort the same data. Bars light up as they're
+         compared and swapped — slower algorithms really feel slower.</p>
+    </header>
+
+    <div class="controls">
+      <label>
+        Algorithm
+        <select id="algorithm">
+          <option value="bubble">Bubble sort — O(n²)</option>
+          <option value="insertion">Insertion sort — O(n²)</option>
+          <option value="selection">Selection sort — O(n²)</option>
+          <option value="merge" selected>Merge sort — O(n log n)</option>
+          <option value="quick">Quick sort — O(n log n)</option>
+        </select>
+      </label>
+
+      <label>
+        Size <span id="sizeValue">60</span>
+        <input type="range" id="size" min="10" max="150" value="60">
+      </label>
+
+      <label>
+        Speed
+        <input type="range" id="speed" min="1" max="100" value="60">
+      </label>
+
+      <div class="buttons">
+        <button id="shuffleBtn" type="button">Shuffle</button>
+        <button id="sortBtn" type="button" class="primary">Sort</button>
+        <button id="stopBtn" type="button" disabled>Stop</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <span>comparisons: <strong id="comparisons">0</strong></span>
+      <span>swaps/writes: <strong id="writes">0</strong></span>
+      <span id="statusText">ready</span>
+    </div>
+
+    <canvas id="canvas" width="900" height="420"></canvas>
+
+    <footer>
+      <a href="../../index.html">← upendrakhanal.com.np</a>
+      <a href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/sorting-visualizer">source</a>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

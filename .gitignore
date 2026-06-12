@@ -1,0 +1,5 @@
+# local tooling
+.claude/
+
+# Pages build output
+_site/
