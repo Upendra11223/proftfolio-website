@@ -18,6 +18,9 @@
 
   <link rel="icon" type="image/jpeg" href="assets/images/profile.jpg">
   <link rel="apple-touch-icon" href="assets/images/profile.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 
   <script type="application/ld+json">
@@ -39,11 +42,14 @@
 </head>
 <body>
 
+<div id="spotlight" aria-hidden="true"></div>
+
 <header>
   <img class="avatar" src="assets/images/profile.jpg" alt="Upendra Khanal" width="72" height="72">
   <div>
     <h1>Upendra Khanal</h1>
     <p class="tagline">BSc.IT student · Bharatpur, Nepal</p>
+    <p class="status"><span class="status-dot"></span>Open to internships</p>
   </div>
   <button id="theme" title="Toggle dark mode" aria-label="Toggle dark mode">◐</button>
 </header>
@@ -113,15 +119,6 @@
         <p>Machine learning models that predict academic results from student data.
            My first applied ML project — data cleaning, feature selection, model comparison.</p>
         <p class="item-links"><a href="https://github.com/Upendra11223/Predicting-Student-Academic-Performance-Using-Machine-Learning" rel="noopener">source</a></p>
-      </li>
-      <li>
-        <div class="item-head">
-          <strong>This website</strong>
-          <span class="meta">2026 · HTML, CSS</span>
-        </div>
-        <p>Hand-written, no frameworks, no build step. Deployed with GitHub Actions to
-           GitHub Pages. View source — it's short.</p>
-        <p class="item-links"><a href="https://github.com/Upendra11223/proftfolio-website" rel="noopener">source</a></p>
       </li>
     </ul>
   </section>
