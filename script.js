@@ -1,99 +1,42 @@
 (function () {
   var root = document.documentElement;
-  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var saved = null;
-  try { saved = localStorage.getItem("theme"); } catch (e) {}
-  if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem("theme"); } catch (e) {}
+  if (savedTheme === "light" || savedTheme === "dark") root.setAttribute("data-theme", savedTheme);
 
-  var themeButton = document.getElementById("theme");
-  if (themeButton) {
-    themeButton.addEventListener("click", function () {
-      var dark = root.getAttribute("data-theme") === "dark" ||
-        (!root.hasAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
-      var next = dark ? "light" : "dark";
+  var themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle) {
+    var setIcon = function () {
+      var isDark = root.getAttribute("data-theme") !== "light";
+      themeToggle.textContent = isDark ? "🌙" : "☀️";
+    };
+    setIcon();
+    themeToggle.addEventListener("click", function () {
+      var darkNow = root.getAttribute("data-theme") !== "light";
+      var next = darkNow ? "light" : "dark";
       root.setAttribute("data-theme", next);
       try { localStorage.setItem("theme", next); } catch (e) {}
+      setIcon();
     });
   }
 
-  var header = document.getElementById("site-header");
-  var hero = document.getElementById("intro");
-  if (header) {
-    var onScroll = function () {
-      header.classList.toggle("scrolled", window.scrollY > 24);
-      root.style.setProperty("--scroll-depth", Math.min(window.scrollY, 400) + "px");
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-  }
+  var progress = document.getElementById("scroll-progress");
+  var header = document.getElementById("topbar");
+  var updateScrollUi = function () {
+    var h = document.documentElement;
+    var scrollTop = h.scrollTop || document.body.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (scrollTop / max) * 100 : 0;
+    if (progress) progress.style.width = pct + "%";
+    if (header) header.classList.toggle("scrolled", scrollTop > 16);
+  };
+  updateScrollUi();
+  window.addEventListener("scroll", updateScrollUi, { passive: true });
 
-  if (hero && !reducedMotion && window.matchMedia("(hover: hover)").matches) {
-    hero.addEventListener("mousemove", function (e) {
-      var rect = hero.getBoundingClientRect();
-      var px = (e.clientX - rect.left) / rect.width;
-      var py = (e.clientY - rect.top) / rect.height;
-      root.style.setProperty("--hero-tilt-x", ((0.5 - py) * 2.2).toFixed(2) + "deg");
-      root.style.setProperty("--hero-tilt-y", ((px - 0.5) * 2.8).toFixed(2) + "deg");
-    });
-    hero.addEventListener("mouseleave", function () {
-      root.style.setProperty("--hero-tilt-x", "0deg");
-      root.style.setProperty("--hero-tilt-y", "0deg");
-    });
-  }
-
-  var spotlight = document.getElementById("spotlight");
-  if (spotlight && !reducedMotion && window.matchMedia("(hover: hover)").matches) {
-    var pending = false;
-    window.addEventListener("mousemove", function (e) {
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(function () {
-        spotlight.style.setProperty("--mx", e.clientX + "px");
-        spotlight.style.setProperty("--my", e.clientY + "px");
-        pending = false;
-      });
-    }, { passive: true });
-  }
-
-  var typed = document.getElementById("typed-role");
-  if (typed) {
-    if (reducedMotion) {
-      typed.textContent = "a web developer and AI researcher.";
-    } else {
-      var words = ["a web developer.", "an AI researcher.", "a JavaScript builder."];
-      var word = 0;
-      var idx = 0;
-      var removing = false;
-      var tick = function () {
-        var current = words[word];
-        if (removing) {
-          idx -= 1;
-          typed.textContent = current.slice(0, idx);
-          if (idx === 0) {
-            removing = false;
-            word = (word + 1) % words.length;
-            setTimeout(tick, 250);
-            return;
-          }
-          setTimeout(tick, 40);
-          return;
-        }
-        idx += 1;
-        typed.textContent = current.slice(0, idx);
-        if (idx === current.length) {
-          removing = true;
-          setTimeout(tick, 1200);
-          return;
-        }
-        setTimeout(tick, 70);
-      };
-      tick();
-    }
-  }
-
-  if (!reducedMotion && "IntersectionObserver" in window) {
-    var revealTargets = document.querySelectorAll("section, .stat-card, .project-card, .skill-card, .list > li");
+  if (!prefersReduced && "IntersectionObserver" in window) {
+    var reveals = document.querySelectorAll(".reveal");
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -101,72 +44,95 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    }, { threshold: 0.15, rootMargin: "0px 0px -30px 0px" });
 
-    revealTargets.forEach(function (el, i) {
-      el.classList.add("reveal");
-      el.style.transitionDelay = (Math.min(i % 6, 4) * 55) + "ms";
+    reveals.forEach(function (el, idx) {
+      el.style.transitionDelay = Math.min(idx * 80, 320) + "ms";
       revealObserver.observe(el);
     });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+  }
 
-    var bars = document.querySelectorAll(".skill-bar");
-    var barObserver = new IntersectionObserver(function (entries) {
+  var counters = document.querySelectorAll("[data-counter]");
+  var animateCounter = function (el) {
+    var end = parseInt(el.getAttribute("data-counter"), 10) || 0;
+    if (prefersReduced) {
+      el.textContent = String(end);
+      return;
+    }
+    var start = null;
+    var duration = 1100;
+    var tick = function (time) {
+      if (!start) start = time;
+      var progress = Math.min((time - start) / duration, 1);
+      el.textContent = String(Math.floor(progress * end));
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = String(end);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  if ("IntersectionObserver" in window) {
+    var counterObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate");
-          barObserver.unobserve(entry.target);
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.35 });
+    counters.forEach(function (el) { counterObserver.observe(el); });
+  } else {
+    counters.forEach(animateCounter);
+  }
 
-    bars.forEach(function (bar) { barObserver.observe(bar); });
+  var navLinks = document.querySelectorAll("nav a[href^='#']");
+  var sectionById = {};
+  navLinks.forEach(function (link) {
+    var id = link.getAttribute("href").slice(1);
+    sectionById[id] = document.getElementById(id);
+  });
 
-    var counters = document.querySelectorAll("[data-counter]");
-    var counterObserver = new IntersectionObserver(function (entries) {
+  if ("IntersectionObserver" in window) {
+    var sectionObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        var el = entry.target;
-        var end = parseInt(el.getAttribute("data-counter"), 10) || 0;
-        var duration = 1100;
-        var startTime = null;
-
-        var step = function (t) {
-          if (!startTime) startTime = t;
-          var progress = Math.min((t - startTime) / duration, 1);
-          var value = Math.floor(progress * end);
-          el.textContent = String(value);
-          if (progress < 1) {
-            requestAnimationFrame(step);
-          } else {
-            el.textContent = String(end);
-          }
-        };
-
-        requestAnimationFrame(step);
-        counterObserver.unobserve(el);
+        var id = entry.target.id;
+        navLinks.forEach(function (link) {
+          link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+        });
       });
-    }, { threshold: 0.45 });
+    }, { threshold: 0.55 });
 
-    counters.forEach(function (counter) { counterObserver.observe(counter); });
-  } else {
-    document.querySelectorAll(".skill-bar").forEach(function (bar) {
-      bar.classList.add("animate");
-    });
-    document.querySelectorAll("[data-counter]").forEach(function (el) {
-      el.textContent = el.getAttribute("data-counter");
+    Object.keys(sectionById).forEach(function (key) {
+      if (sectionById[key]) sectionObserver.observe(sectionById[key]);
     });
   }
 
-  var tiltCards = document.querySelectorAll(".tilt-card");
-  if (!reducedMotion && window.matchMedia("(hover: hover)").matches) {
+  if (!prefersReduced && window.matchMedia("(hover: hover)").matches) {
+    var magneticButtons = document.querySelectorAll(".magnetic");
+    magneticButtons.forEach(function (btn) {
+      btn.addEventListener("mousemove", function (e) {
+        var rect = btn.getBoundingClientRect();
+        var x = e.clientX - rect.left - rect.width / 2;
+        var y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = "translate(" + (x * 0.08).toFixed(2) + "px," + (y * 0.08).toFixed(2) + "px)";
+      });
+      btn.addEventListener("mouseleave", function () {
+        btn.style.transform = "";
+      });
+    });
+
+    var tiltCards = document.querySelectorAll(".tilt");
     tiltCards.forEach(function (card) {
       card.addEventListener("mousemove", function (e) {
         var rect = card.getBoundingClientRect();
         var px = (e.clientX - rect.left) / rect.width;
         var py = (e.clientY - rect.top) / rect.height;
-        var rx = (0.5 - py) * 10;
-        var ry = (px - 0.5) * 12;
-        card.style.transform = "perspective(900px) rotateX(" + rx + "deg) rotateY(" + ry + "deg) translateY(-4px)";
+        var rx = (0.5 - py) * 8;
+        var ry = (px - 0.5) * 10;
+        card.style.transform = "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) translateY(-3px)";
       });
       card.addEventListener("mouseleave", function () {
         card.style.transform = "";
