@@ -10,6 +10,9 @@
   --accent-grad: linear-gradient(120deg, #7c9dff, #b06bff 55%, #33d9ff);
   --shadow: 0 18px 45px rgba(3, 8, 24, 0.45);
   --ok: #58d68d;
+  --hero-tilt-x: 0deg;
+  --hero-tilt-y: 0deg;
+  --scroll-depth: 0px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -26,6 +29,7 @@
     --shadow: 0 18px 45px rgba(35, 52, 121, 0.18);
     --ok: #0f8f56;
   }
+
 }
 
 :root[data-theme="light"] {
@@ -74,6 +78,16 @@ body {
   font: 16px/1.7 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   letter-spacing: -0.012em;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 45%, transparent 35%, rgba(0, 0, 0, 0.52) 100%);
 }
 
 #spotlight {
@@ -83,6 +97,40 @@ body {
   pointer-events: none;
   background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 20%), rgba(123, 146, 255, 0.15), transparent 70%);
 }
+
+.film-grain {
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 30;
+  opacity: 0.12;
+  background-image: repeating-radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.2) 0 1px, transparent 1px 3px);
+  mix-blend-mode: soft-light;
+  animation: grainShift 0.5s steps(2) infinite;
+}
+
+@keyframes grainShift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(2%, 1.5%); }
+  50% { transform: translate(-1.2%, 2%); }
+  75% { transform: translate(1%, -1.4%); }
+  100% { transform: translate(0, 0); }
+}
+
+.cinema-bars::before,
+.cinema-bars::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 4.8vh;
+  background: rgba(0, 0, 0, 0.66);
+  pointer-events: none;
+  z-index: 29;
+}
+
+.cinema-bars::before { top: 0; }
+.cinema-bars::after { bottom: 0; }
 
 a {
   color: var(--accent-2);
@@ -187,12 +235,27 @@ section {
   border-radius: 1.3rem;
   padding: 1.35rem;
   backdrop-filter: blur(8px);
+  position: relative;
+  isolation: isolate;
+}
+
+section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 35%, transparent 70%, rgba(85, 118, 255, 0.1));
+  opacity: 0.25;
+  z-index: -1;
 }
 
 .hero {
   position: relative;
   overflow: hidden;
   min-height: 25rem;
+  transform: perspective(1100px) rotateX(var(--hero-tilt-x)) rotateY(var(--hero-tilt-y)) translateY(calc(var(--scroll-depth) * -0.02));
+  transition: transform 0.25s ease;
 }
 
 .hero-bg {
@@ -208,6 +271,28 @@ section {
   opacity: 0.45;
   transform-style: preserve-3d;
   animation: float 10s ease-in-out infinite;
+}
+
+.light-beam {
+  position: absolute;
+  width: 38rem;
+  height: 9rem;
+  opacity: 0.28;
+  filter: blur(18px);
+  background: linear-gradient(90deg, transparent, rgba(159, 212, 255, 0.8), transparent);
+  transform: rotate(-22deg);
+  animation: beamSweep 8s ease-in-out infinite;
+}
+
+.beam-one {
+  top: 20%;
+  left: -30%;
+}
+
+.beam-two {
+  top: 58%;
+  left: -45%;
+  animation-delay: -3.5s;
 }
 
 .layer-one {
@@ -251,10 +336,22 @@ section {
   50% { transform: translate3d(0, 16px, 44px) rotate(5deg); }
 }
 
+@keyframes beamSweep {
+  0%,
+  100% { transform: translateX(0) rotate(-22deg); opacity: 0.18; }
+  50% { transform: translateX(95%) rotate(-18deg); opacity: 0.4; }
+}
+
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 44rem;
+  animation: heroRise 0.9s ease 0.1s both;
+}
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(22px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .status {
@@ -501,6 +598,7 @@ h1 {
 .tilt-card:hover {
   border-color: color-mix(in srgb, var(--accent) 68%, transparent);
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.35);
+  transform: translateY(-5px) scale(1.01);
 }
 
 footer {
@@ -519,6 +617,12 @@ footer {
 .reveal.in {
   opacity: 1;
   transform: none;
+  animation: sceneFade 0.9s ease both;
+}
+
+@keyframes sceneFade {
+  from { clip-path: inset(4% 0 10% 0); filter: blur(2px); }
+  to { clip-path: inset(0 0 0 0); filter: blur(0); }
 }
 
 @media (max-width: 960px) {
@@ -573,5 +677,11 @@ footer {
   }
 
   #spotlight,
-  .hero-bg { display: none; }
+  .hero-bg,
+  .film-grain,
+  .cinema-bars { display: none; }
+
+  .hero {
+    transform: none;
+  }
 }

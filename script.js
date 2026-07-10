@@ -18,12 +18,28 @@
   }
 
   var header = document.getElementById("site-header");
+  var hero = document.getElementById("intro");
   if (header) {
     var onScroll = function () {
       header.classList.toggle("scrolled", window.scrollY > 24);
+      root.style.setProperty("--scroll-depth", Math.min(window.scrollY, 400) + "px");
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  if (hero && !reducedMotion && window.matchMedia("(hover: hover)").matches) {
+    hero.addEventListener("mousemove", function (e) {
+      var rect = hero.getBoundingClientRect();
+      var px = (e.clientX - rect.left) / rect.width;
+      var py = (e.clientY - rect.top) / rect.height;
+      root.style.setProperty("--hero-tilt-x", ((0.5 - py) * 2.2).toFixed(2) + "deg");
+      root.style.setProperty("--hero-tilt-y", ((px - 0.5) * 2.8).toFixed(2) + "deg");
+    });
+    hero.addEventListener("mouseleave", function () {
+      root.style.setProperty("--hero-tilt-x", "0deg");
+      root.style.setProperty("--hero-tilt-y", "0deg");
+    });
   }
 
   var spotlight = document.getElementById("spotlight");
