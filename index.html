@@ -20,7 +20,7 @@
   <link rel="apple-touch-icon" href="assets/images/profile.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 
   <script type="application/ld+json">
@@ -41,93 +41,182 @@
   </script>
 </head>
 <body>
-
 <div id="spotlight" aria-hidden="true"></div>
 
-<header>
-  <img class="avatar" src="assets/images/profile.jpg" alt="Upendra Khanal" width="72" height="72">
-  <div>
-    <h1>Upendra Khanal</h1>
-    <p class="tagline">BSc.IT student · Bharatpur, Nepal</p>
-    <p class="status"><span class="status-dot"></span>Open to internships</p>
+<header class="site-header" id="site-header">
+  <div class="brand">
+    <img class="avatar" src="assets/images/profile.jpg" alt="Upendra Khanal" width="64" height="64">
+    <div>
+      <p class="eyebrow">Upendra Khanal</p>
+      <p class="tagline">BSc.IT student · Bharatpur, Nepal</p>
+    </div>
   </div>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="#projects">Projects</a>
+    <a href="#research">Research</a>
+    <a href="#contact">Contact</a>
+  </nav>
   <button id="theme" title="Toggle dark mode" aria-label="Toggle dark mode">◐</button>
 </header>
 
 <main>
-
-  <section id="intro">
-    <p>
-      Hi — I'm Upendra. I study Information Technology at
-      <a href="https://ismt.edu.np" rel="noopener">ISMT College</a> and spend most of my free
-      time building things for the web and writing about AI. I've published
-      <a href="#research">four research papers</a>, mostly on large language models and how
-      people actually use them.
-    </p>
-    <p>
-      Right now I'm learning machine learning with Python and getting better at JavaScript
-      by building small projects from scratch — no frameworks, so I understand what's
-      underneath.
-    </p>
-    <p class="links">
-      <a href="https://github.com/Upendra11223" rel="noopener">GitHub</a> ·
-      <a href="https://www.linkedin.com/in/upendra-khanal-a86692350" rel="noopener">LinkedIn</a> ·
-      <a href="assets/resume/resume.pdf">Resume (PDF)</a> ·
-      <a href="mailto:upendrakhanal2006@gmail.com">upendrakhanal2006@gmail.com</a>
-    </p>
+  <section class="hero reveal" id="intro">
+    <div class="hero-bg" aria-hidden="true">
+      <span class="layer layer-one"></span>
+      <span class="layer layer-two"></span>
+      <span class="layer layer-three"></span>
+      <span class="grid"></span>
+    </div>
+    <div class="hero-content">
+      <p class="status"><span class="status-dot"></span>Open to internships</p>
+      <h1>Building delightful web experiences and practical AI ideas.</h1>
+      <p class="hero-subtitle">I am <span id="typed-role" aria-live="polite"></span></p>
+      <p>
+        Hi — I'm Upendra. I study Information Technology at
+        <a href="https://ismt.edu.np" rel="noopener">ISMT College</a> and spend most of my free
+        time building things for the web and writing about AI. I've published
+        <a href="#research">four research papers</a>, mostly on large language models and how
+        people actually use them.
+      </p>
+      <p>
+        Right now I'm learning machine learning with Python and getting better at JavaScript
+        by building small projects from scratch — no frameworks, so I understand what's
+        underneath.
+      </p>
+      <p class="links">
+        <a href="https://github.com/Upendra11223" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/upendra-khanal-a86692350" rel="noopener">LinkedIn</a>
+        <a href="assets/resume/resume.pdf">Resume (PDF)</a>
+        <a href="mailto:upendrakhanal2006@gmail.com">upendrakhanal2006@gmail.com</a>
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#projects">Explore Projects</a>
+        <a class="btn btn-secondary" href="#contact">Let's Connect</a>
+      </div>
+    </div>
   </section>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <ul class="list">
-      <li>
+  <section class="stats reveal" aria-label="Highlights">
+    <article class="stat-card tilt-card">
+      <p class="stat-number" data-counter="4">0</p>
+      <p class="stat-label">Published Papers</p>
+    </article>
+    <article class="stat-card tilt-card">
+      <p class="stat-number" data-counter="6">0</p>
+      <p class="stat-label">Featured Projects</p>
+    </article>
+    <article class="stat-card tilt-card">
+      <p class="stat-number" data-counter="2024">0</p>
+      <p class="stat-label">BSc.IT Journey Start</p>
+    </article>
+  </section>
+
+  <section class="skills reveal" id="skills">
+    <div class="section-head">
+      <h2>Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <article class="skill-card tilt-card">
+        <h3>Frontend</h3>
+        <p>Building responsive interfaces with vanilla web technologies.</p>
+        <div class="skill-bar"><span style="--level: 90%"></span></div>
+      </article>
+      <article class="skill-card tilt-card">
+        <h3>JavaScript</h3>
+        <p>Creating interactive experiences, visualizations, and app logic.</p>
+        <div class="skill-bar"><span style="--level: 84%"></span></div>
+      </article>
+      <article class="skill-card tilt-card">
+        <h3>Python & ML</h3>
+        <p>Learning model workflows, data handling, and applied AI fundamentals.</p>
+        <div class="skill-bar"><span style="--level: 72%"></span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects" class="reveal">
+    <div class="section-head">
+      <h2>Projects</h2>
+      <p class="section-note">Interactive builds, experiments, and demos.</p>
+    </div>
+    <div class="project-grid">
+      <article class="project-card tilt-card">
         <div class="item-head">
           <strong>Sorting Visualizer</strong>
-          <span class="meta">2026 · JavaScript, Canvas, DSA</span>
+          <span class="meta">2026</span>
         </div>
         <p>Five sorting algorithms animated step by step — bubble, insertion, selection,
            merge and quick sort — with live comparison and swap counters, so you can see
            why O(n log n) beats O(n²). The algorithm code reads like the textbook version.</p>
+        <p class="tags"><span>JavaScript</span><span>Canvas</span><span>DSA</span></p>
         <p class="item-links"><a href="projects/sorting-visualizer/index.html">try it</a> ·
            <a href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/sorting-visualizer" rel="noopener">source</a></p>
-      </li>
-      <li>
+      </article>
+
+      <article class="project-card tilt-card">
         <div class="item-head">
           <strong>Flappy Bird</strong>
-          <span class="meta">2025 · JavaScript, Canvas</span>
+          <span class="meta">2025</span>
         </div>
         <p>A remake built from scratch on the Canvas API — gravity and collision physics,
            particle effects, a day-night cycle. No game engine, no libraries.</p>
+        <p class="tags"><span>JavaScript</span><span>Canvas</span><span>Game Dev</span></p>
         <p class="item-links"><a href="projects/flappybird/index.html">play it</a> ·
            <a href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/flappybird" rel="noopener">source</a></p>
-      </li>
-      <li>
+      </article>
+
+      <article class="project-card tilt-card">
         <div class="item-head">
           <strong>Password Generator</strong>
-          <span class="meta">2025 · JavaScript</span>
+          <span class="meta">2025</span>
         </div>
         <p>Turns a name and a base phrase into strong passwords. Runs entirely in the
            browser — nothing is sent anywhere.</p>
+        <p class="tags"><span>JavaScript</span><span>Security Basics</span></p>
         <p class="item-links"><a href="projects/password-generator/index.html">try it</a> ·
            <a href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/password-generator" rel="noopener">source</a></p>
-      </li>
-      <li>
+      </article>
+
+      <article class="project-card tilt-card">
         <div class="item-head">
           <strong>Student Performance Predictor</strong>
-          <span class="meta">2025 · Python, scikit-learn</span>
+          <span class="meta">2025</span>
         </div>
         <p>Machine learning models that predict academic results from student data.
            My first applied ML project — data cleaning, feature selection, model comparison.</p>
+        <p class="tags"><span>Python</span><span>scikit-learn</span><span>ML</span></p>
         <p class="item-links"><a href="https://github.com/Upendra11223/Predicting-Student-Academic-Performance-Using-Machine-Learning" rel="noopener">source</a></p>
-      </li>
-    </ul>
+      </article>
+
+      <article class="project-card tilt-card placeholder">
+        <div class="item-head">
+          <strong>AI Study Companion</strong>
+          <span class="meta">Sample Concept</span>
+        </div>
+        <p>A concept UI for planning study sessions with AI-generated roadmaps,
+           daily reminders, and topic-based flashcards.</p>
+        <p class="tags"><span>UI Concept</span><span>AI Workflow</span></p>
+        <p class="item-links"><a href="#contact">request demo</a></p>
+      </article>
+
+      <article class="project-card tilt-card placeholder">
+        <div class="item-head">
+          <strong>Portfolio Insight Dashboard</strong>
+          <span class="meta">Sample Showcase</span>
+        </div>
+        <p>A visual dashboard concept for tracking visitor engagement, scroll depth,
+           and project click trends in a privacy-friendly way.</p>
+        <p class="tags"><span>Data Viz</span><span>Dashboard</span></p>
+        <p class="item-links"><a href="#contact">see prototype</a></p>
+      </article>
+    </div>
   </section>
 
-  <section id="research">
+  <section id="research" class="reveal">
     <h2>Research</h2>
     <p class="section-note">Papers published on Zenodo.</p>
     <ul class="list">
-      <li>
+      <li class="tilt-card">
         <div class="item-head">
           <strong><a href="https://doi.org/10.5281/zenodo.16730457" rel="noopener">AI in Architecture: Smarter and Faster Building Designs</a></strong>
           <span class="meta">Aug 2025</span>
@@ -135,7 +224,7 @@
         <p>With Laxmi Khanal. How LLMs and generative design tools change architectural
            design — and the risks: job displacement, data privacy, creative restriction.</p>
       </li>
-      <li>
+      <li class="tilt-card">
         <div class="item-head">
           <strong><a href="https://doi.org/10.5281/zenodo.15250208" rel="noopener">The Rise of AI Utility: How ChatGPT Sparked a Global Shift in AI Perception</a></strong>
           <span class="meta">Apr 2025</span>
@@ -143,7 +232,7 @@
         <p>How LLMs reshaped public perception of AI and normalised multi-model workflows
            across ChatGPT, Claude, Gemini and DeepSeek.</p>
       </li>
-      <li>
+      <li class="tilt-card">
         <div class="item-head">
           <strong><a href="https://doi.org/10.5281/zenodo.15249655" rel="noopener">Unlocking ChatGPT's Potential: Strategies in Prompt Engineering</a></strong>
           <span class="meta">Apr 2025</span>
@@ -151,7 +240,7 @@
         <p>Prompt engineering strategies across education, software development and law,
            with an analysis of ethical risks.</p>
       </li>
-      <li>
+      <li class="tilt-card">
         <div class="item-head">
           <strong><a href="https://doi.org/10.5281/zenodo.15221042" rel="noopener">Recursive Realities: The Universe as an AI Simulation</a></strong>
           <span class="meta">Apr 2025</span>
@@ -162,22 +251,22 @@
     </ul>
   </section>
 
-  <section id="education">
+  <section id="education" class="reveal">
     <h2>Education</h2>
     <ul class="list compact">
-      <li>
+      <li class="tilt-card">
         <div class="item-head">
           <strong>ISMT College</strong> — BSc. Information Technology
           <span class="meta">2024 – present</span>
         </div>
       </li>
-      <li>
+      <li class="tilt-card">
         <div class="item-head">
           <strong>Aroma English Secondary School</strong> — SLC (+2)
           <span class="meta">2022 – 2024</span>
         </div>
       </li>
-      <li>
+      <li class="tilt-card">
         <div class="item-head">
           <strong>Greenland Public School</strong> — SEE
           <span class="meta">2020 – 2022</span>
@@ -186,7 +275,7 @@
     </ul>
   </section>
 
-  <section id="contact">
+  <section id="contact" class="reveal">
     <h2>Contact</h2>
     <p>
       The fastest way to reach me is email:
@@ -195,7 +284,6 @@
       web development or applied AI.
     </p>
   </section>
-
 </main>
 
 <footer>
