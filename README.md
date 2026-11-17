@@ -7,18 +7,18 @@ Personal portfolio of **Upendra Khanal** — BSc.IT student, web developer and A
 ## Stack
 
 - Plain HTML / CSS / JavaScript — no frameworks, no build step
-- Inter + system fonts, light/dark theme, scroll reveals, cursor spotlight
+- Fredoka and DM Sans fonts, playful illustrated design, light/dark theme, scroll reveals
 - Deployed to GitHub Pages via GitHub Actions (`.github/workflows/pages.yml`)
 
 ## Structure
 
 ```
-index.html      — the site
-styles.css      — design system
-script.js       — theme toggle, scroll reveals, cursor spotlight
+index.html      — portfolio content
+styles.css      — portfolio design system
+script.js       — theme toggle and scroll reveals
 404.html        — custom not-found page
-assets/         — images & résumé
-projects/       — live project demos (Flappy Bird, Password Generator)
+assets/         — profile and project images
+projects/       — live project demos
 ```
 
 ## Run locally

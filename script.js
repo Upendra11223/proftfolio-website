@@ -1,4 +1,4 @@
-// Theme toggle, scroll reveals, and the cursor spotlight.
+// Theme toggle and scroll reveals.
 (function () {
   var root = document.documentElement;
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -16,21 +16,6 @@
     root.setAttribute("data-theme", next);
     try { localStorage.setItem("theme", next); } catch (e) {}
   });
-
-  /* ---------- cursor spotlight ---------- */
-  var spotlight = document.getElementById("spotlight");
-  if (spotlight && !reducedMotion && window.matchMedia("(hover: hover)").matches) {
-    var pending = false;
-    window.addEventListener("mousemove", function (e) {
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(function () {
-        spotlight.style.setProperty("--mx", e.clientX + "px");
-        spotlight.style.setProperty("--my", e.clientY + "px");
-        pending = false;
-      });
-    }, { passive: true });
-  }
 
   /* ---------- scroll reveals, staggered ---------- */
   if (!reducedMotion && "IntersectionObserver" in window) {
