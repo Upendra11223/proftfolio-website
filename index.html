@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upendra Khanal</title>
+  <title>Upendra Khanal — Web Developer &amp; AI Researcher</title>
 
-  <meta name="description" content="Upendra Khanal — BSc.IT student in Chitwan, Nepal. I build for the web and write about AI. Four published research papers.">
+  <meta name="description" content="Upendra Khanal — BSc.IT student in Bharatpur, Nepal. I build for the web and write about AI. Four published research papers.">
   <meta name="author" content="Upendra Khanal">
   <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#ffd23f">
   <link rel="canonical" href="https://upendrakhanal.com.np/">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Upendra Khanal">
-  <meta property="og:description" content="BSc.IT student in Chitwan, Nepal. I build for the web and write about AI.">
+  <meta property="og:title" content="Upendra Khanal — Web Developer &amp; AI Researcher">
+  <meta property="og:description" content="BSc.IT student in Bharatpur, Nepal. I build for the web and write about AI.">
   <meta property="og:image" content="https://upendrakhanal.com.np/assets/images/profile.jpg">
   <meta property="og:url" content="https://upendrakhanal.com.np/">
 
@@ -20,8 +21,9 @@
   <link rel="apple-touch-icon" href="assets/images/profile.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
 
   <script type="application/ld+json">
   {
@@ -42,166 +44,215 @@
 </head>
 <body>
 
-<div id="spotlight" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
 
-<header>
-  <img class="avatar" src="assets/images/profile.jpg" alt="Upendra Khanal" width="72" height="72">
-  <div>
-    <h1>Upendra Khanal</h1>
-    <p class="tagline">BSc.IT student · Bharatpur, Nepal</p>
-    <p class="status"><span class="status-dot"></span>Open to internships</p>
-  </div>
-  <button id="theme" title="Toggle dark mode" aria-label="Toggle dark mode">◐</button>
+<header class="nav">
+  <a class="brand" href="#top" aria-label="Upendra Khanal — home">
+    <span class="brand-mark" aria-hidden="true">UK</span>
+    <span class="brand-name">Upendra Khanal</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="#projects">Projects</a>
+    <a href="#research">Research</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button id="theme" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">
+    <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+  </button>
 </header>
 
-<main>
+<main id="main">
 
-  <section id="intro">
-    <p>
-      Hi — I'm Upendra. I study Information Technology at
-      <a href="https://ismt.edu.np" rel="noopener">ISMT College</a> and spend most of my free
-      time building things for the web and writing about AI. I've published
-      <a href="#research">four research papers</a>, mostly on large language models and how
-      people actually use them.
-    </p>
-    <p>
-      Right now I'm learning machine learning with Python and getting better at JavaScript
-      by building small projects from scratch — no frameworks, so I understand what's
-      underneath.
-    </p>
-    <p class="links">
-      <a href="https://github.com/Upendra11223" rel="noopener">GitHub</a> ·
-      <a href="https://www.linkedin.com/in/upendra-khanal-a86692350" rel="noopener">LinkedIn</a> ·
-      <a href="assets/resume/resume.pdf">Resume (PDF)</a> ·
-      <a href="mailto:upendrakhanal2006@gmail.com">upendrakhanal2006@gmail.com</a>
-    </p>
+  <section class="hero" id="top">
+    <div class="hero-text">
+      <p class="status"><span class="status-dot"></span>Open to internships</p>
+      <h1>Hi, I'm <span class="hl">Upendra</span>.<br>I build for the web and write about <span class="hl hl-pink">AI</span>.</h1>
+      <p class="lead">
+        I study Information Technology at
+        <a href="https://ismt.edu.np" rel="noopener">ISMT College</a> in Bharatpur, Nepal.
+        I've published <a href="#research">four research papers</a> on large language models
+        and how people actually use them, and I build small projects from scratch — no
+        frameworks — so I understand what's underneath.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#projects">See my work</a>
+        <a class="btn" href="mailto:upendrakhanal2006@gmail.com">Email me</a>
+        <a class="btn btn-icon" href="https://github.com/Upendra11223" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+        </a>
+        <a class="btn btn-icon" href="https://www.linkedin.com/in/upendra-khanal-a86692350" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-1.95 3.76-1.95 4.02 0 4.88 2.5 4.88 5.9V21h-4v-5.1c0-1.3-.03-2.9-1.85-2.9-1.85 0-2.15 1.38-2.15 2.8V21h-4z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <svg class="doodle doodle-star" viewBox="0 0 60 60" aria-hidden="true"><path d="M30 4l7 17 19 2-14 13 4 19-16-10-16 10 4-19L4 23l19-2z"/></svg>
+      <svg class="doodle doodle-bolt" viewBox="0 0 40 60" aria-hidden="true"><path d="M24 3 5 34h13l-4 23 21-33H21z"/></svg>
+      <svg class="doodle doodle-squiggle" viewBox="0 0 90 24" aria-hidden="true"><path d="M4 12c8-12 14 12 22 0s14 12 22 0 14 12 22 0 10 6 16 2"/></svg>
+      <div class="avatar-frame">
+        <img src="assets/images/profile.jpg" alt="Portrait of Upendra Khanal" width="280" height="280">
+      </div>
+      <p class="bubble">Namaste! <span aria-hidden="true">👋</span></p>
+    </div>
   </section>
 
+  <ul class="facts" aria-label="At a glance">
+    <li><strong>4</strong><span>research papers</span></li>
+    <li><strong>4</strong><span>shipped projects</span></li>
+    <li><strong>0</strong><span>frameworks needed</span></li>
+    <li><strong>BSc.IT</strong><span>2024 – present</span></li>
+  </ul>
+
   <section id="projects">
-    <h2>Projects</h2>
-    <ul class="list">
-      <li>
-        <div class="item-head">
-          <strong>Sorting Visualizer</strong>
-          <span class="meta">2026 · JavaScript, Canvas, DSA</span>
+    <div class="section-head">
+      <h2><span>Projects</span></h2>
+      <p>Things I built to learn how they really work.</p>
+    </div>
+    <div class="cards">
+
+      <article class="card c-blue">
+        <div class="card-art" aria-hidden="true">
+          <svg viewBox="0 0 120 70"><rect x="10" y="40" width="14" height="24" rx="3"/><rect x="31" y="26" width="14" height="38" rx="3"/><rect x="52" y="48" width="14" height="16" rx="3"/><rect x="73" y="12" width="14" height="52" rx="3"/><rect x="94" y="32" width="14" height="32" rx="3"/></svg>
         </div>
-        <p>Five sorting algorithms animated step by step — bubble, insertion, selection,
-           merge and quick sort — with live comparison and swap counters, so you can see
-           why O(n log n) beats O(n²). The algorithm code reads like the textbook version.</p>
-        <p class="item-links"><a href="projects/sorting-visualizer/index.html">try it</a> ·
-           <a href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/sorting-visualizer" rel="noopener">source</a></p>
-      </li>
-      <li>
-        <div class="item-head">
-          <strong>Flappy Bird</strong>
-          <span class="meta">2025 · JavaScript, Canvas</span>
+        <div class="card-body">
+          <p class="meta">2026 · JavaScript · Canvas · DSA</p>
+          <h3>Sorting Visualizer</h3>
+          <p>Five sorting algorithms animated step by step, with live comparison and swap
+             counters — so you can see why O(n log n) beats O(n²).</p>
+          <p class="card-links">
+            <a class="btn btn-small btn-primary" href="projects/sorting-visualizer/index.html">Try it</a>
+            <a class="btn btn-small" href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/sorting-visualizer" rel="noopener">Source</a>
+          </p>
         </div>
-        <p>A remake built from scratch on the Canvas API — gravity and collision physics,
-           particle effects, a day-night cycle. No game engine, no libraries.</p>
-        <p class="item-links"><a href="projects/flappybird/index.html">play it</a> ·
-           <a href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/flappybird" rel="noopener">source</a></p>
-      </li>
-      <li>
-        <div class="item-head">
-          <strong>Password Generator</strong>
-          <span class="meta">2025 · JavaScript</span>
+      </article>
+
+      <article class="card c-mint">
+        <div class="card-art" aria-hidden="true">
+          <svg viewBox="0 0 120 70"><rect class="alt" x="14" y="0" width="18" height="24"/><rect class="alt" x="14" y="50" width="18" height="20"/><rect class="alt" x="90" y="0" width="18" height="14"/><rect class="alt" x="90" y="42" width="18" height="28"/><ellipse cx="60" cy="34" rx="15" ry="12"/><circle class="white" cx="66" cy="30" r="4.5"/><circle class="dot" cx="67.5" cy="30" r="1.6"/><path class="beak" d="M73 34h11l-11 7z"/></svg>
         </div>
-        <p>Turns a name and a base phrase into strong passwords. Runs entirely in the
-           browser — nothing is sent anywhere.</p>
-        <p class="item-links"><a href="projects/password-generator/index.html">try it</a> ·
-           <a href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/password-generator" rel="noopener">source</a></p>
-      </li>
-      <li>
-        <div class="item-head">
-          <strong>Student Performance Predictor</strong>
-          <span class="meta">2025 · Python, scikit-learn</span>
+        <div class="card-body">
+          <p class="meta">2025 · JavaScript · Canvas</p>
+          <h3>Flappy Bird</h3>
+          <p>A remake built from scratch on the Canvas API — gravity and collision physics,
+             particle effects, a day-night cycle. No game engine, no libraries.</p>
+          <p class="card-links">
+            <a class="btn btn-small btn-primary" href="projects/flappybird/index.html">Play it</a>
+            <a class="btn btn-small" href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/flappybird" rel="noopener">Source</a>
+          </p>
         </div>
-        <p>Machine learning models that predict academic results from student data.
-           My first applied ML project — data cleaning, feature selection, model comparison.</p>
-        <p class="item-links"><a href="https://github.com/Upendra11223/Predicting-Student-Academic-Performance-Using-Machine-Learning" rel="noopener">source</a></p>
-      </li>
-    </ul>
+      </article>
+
+      <article class="card c-pink">
+        <div class="card-art" aria-hidden="true">
+          <svg viewBox="0 0 120 70"><path class="none" d="M46 32V22a14 14 0 0 1 28 0v10"/><rect x="36" y="30" width="48" height="34" rx="7"/><circle class="dot" cx="60" cy="44" r="4"/><path class="none" d="M60 46v8"/></svg>
+        </div>
+        <div class="card-body">
+          <p class="meta">2025 · JavaScript</p>
+          <h3>Password Generator</h3>
+          <p>Generates strong passwords with a live strength meter and export options.
+             Runs entirely in the browser — nothing is sent anywhere.</p>
+          <p class="card-links">
+            <a class="btn btn-small btn-primary" href="projects/password-generator/index.html">Try it</a>
+            <a class="btn btn-small" href="https://github.com/Upendra11223/proftfolio-website/tree/main/projects/password-generator" rel="noopener">Source</a>
+          </p>
+        </div>
+      </article>
+
+      <article class="card c-purple">
+        <div class="card-art" aria-hidden="true">
+          <svg viewBox="0 0 120 70"><path class="none" d="M12 62h98M12 62V8"/><path class="none" d="M18 54 44 40l20 6 38-32"/><circle cx="18" cy="54" r="5"/><circle cx="44" cy="40" r="5"/><circle cx="64" cy="46" r="5"/><circle cx="102" cy="14" r="5"/></svg>
+        </div>
+        <div class="card-body">
+          <p class="meta">2025 · Python · scikit-learn</p>
+          <h3>Student Performance Predictor</h3>
+          <p>Machine learning models that predict academic results from student data —
+             data cleaning, feature selection and model comparison.</p>
+          <p class="card-links">
+            <a class="btn btn-small" href="https://github.com/Upendra11223/Predicting-Student-Academic-Performance-Using-Machine-Learning" rel="noopener">Source</a>
+          </p>
+        </div>
+      </article>
+
+    </div>
   </section>
 
   <section id="research">
-    <h2>Research</h2>
-    <p class="section-note">Papers published on Zenodo.</p>
-    <ul class="list">
+    <div class="section-head">
+      <h2><span>Research</span></h2>
+      <p>Papers published on Zenodo.</p>
+    </div>
+    <ol class="papers">
       <li>
-        <div class="item-head">
-          <strong><a href="https://doi.org/10.5281/zenodo.16730457" rel="noopener">AI in Architecture: Smarter and Faster Building Designs</a></strong>
-          <span class="meta">Aug 2025</span>
-        </div>
+        <span class="paper-date">Aug 2025</span>
+        <h3><a href="https://doi.org/10.5281/zenodo.16730457" rel="noopener">AI in Architecture: Smarter and Faster Building Designs</a></h3>
         <p>With Laxmi Khanal. How LLMs and generative design tools change architectural
            design — and the risks: job displacement, data privacy, creative restriction.</p>
       </li>
       <li>
-        <div class="item-head">
-          <strong><a href="https://doi.org/10.5281/zenodo.15250208" rel="noopener">The Rise of AI Utility: How ChatGPT Sparked a Global Shift in AI Perception</a></strong>
-          <span class="meta">Apr 2025</span>
-        </div>
+        <span class="paper-date">Apr 2025</span>
+        <h3><a href="https://doi.org/10.5281/zenodo.15250208" rel="noopener">The Rise of AI Utility: How ChatGPT Sparked a Global Shift in AI Perception</a></h3>
         <p>How LLMs reshaped public perception of AI and normalised multi-model workflows
            across ChatGPT, Claude, Gemini and DeepSeek.</p>
       </li>
       <li>
-        <div class="item-head">
-          <strong><a href="https://doi.org/10.5281/zenodo.15249655" rel="noopener">Unlocking ChatGPT's Potential: Strategies in Prompt Engineering</a></strong>
-          <span class="meta">Apr 2025</span>
-        </div>
+        <span class="paper-date">Apr 2025</span>
+        <h3><a href="https://doi.org/10.5281/zenodo.15249655" rel="noopener">Unlocking ChatGPT's Potential: Strategies in Prompt Engineering</a></h3>
         <p>Prompt engineering strategies across education, software development and law,
            with an analysis of ethical risks.</p>
       </li>
       <li>
-        <div class="item-head">
-          <strong><a href="https://doi.org/10.5281/zenodo.15221042" rel="noopener">Recursive Realities: The Universe as an AI Simulation</a></strong>
-          <span class="meta">Apr 2025</span>
-        </div>
+        <span class="paper-date">Apr 2025</span>
+        <h3><a href="https://doi.org/10.5281/zenodo.15221042" rel="noopener">Recursive Realities: The Universe as an AI Simulation</a></h3>
         <p>A speculative paper on the universe as a recursively self-improving simulation,
            mixing scientific analogy, metaphysics and Hindu cosmology.</p>
       </li>
-    </ul>
+    </ol>
   </section>
 
   <section id="education">
-    <h2>Education</h2>
-    <ul class="list compact">
+    <div class="section-head">
+      <h2><span>Education</span></h2>
+    </div>
+    <ol class="timeline">
       <li>
-        <div class="item-head">
-          <strong>ISMT College</strong> — BSc. Information Technology
-          <span class="meta">2024 – present</span>
-        </div>
+        <span class="when">2024 – present</span>
+        <h3>ISMT College</h3>
+        <p>BSc. Information Technology</p>
       </li>
       <li>
-        <div class="item-head">
-          <strong>Aroma English Secondary School</strong> — SLC (+2)
-          <span class="meta">2022 – 2024</span>
-        </div>
+        <span class="when">2022 – 2024</span>
+        <h3>Aroma English Secondary School</h3>
+        <p>SLC (+2)</p>
       </li>
       <li>
-        <div class="item-head">
-          <strong>Greenland Public School</strong> — SEE
-          <span class="meta">2020 – 2022</span>
-        </div>
+        <span class="when">2020 – 2022</span>
+        <h3>Greenland Public School</h3>
+        <p>SEE</p>
       </li>
-    </ul>
+    </ol>
   </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
+  <section id="contact" class="contact">
+    <h2>Let's build something.</h2>
     <p>
-      The fastest way to reach me is email:
-      <a href="mailto:upendrakhanal2006@gmail.com">upendrakhanal2006@gmail.com</a>.
       I'm open to internships and collaboration — especially anything involving
-      web development or applied AI.
+      web development or applied AI. Email is the fastest way to reach me.
     </p>
+    <div class="actions">
+      <a class="btn btn-primary" href="mailto:upendrakhanal2006@gmail.com">upendrakhanal2006@gmail.com</a>
+      <a class="btn" href="https://www.linkedin.com/in/upendra-khanal-a86692350" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/Upendra11223" rel="noopener">GitHub</a>
+    </div>
   </section>
 
 </main>
 
 <footer>
-  <p>© 2026 Upendra Khanal · last updated June 2026</p>
+  <p>© 2026 Upendra Khanal · Hand-built with plain HTML, CSS &amp; JavaScript</p>
 </footer>
 
-<script src="script.js"></script>
 </body>
 </html>

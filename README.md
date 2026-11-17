@@ -7,18 +7,19 @@ Personal portfolio of **Upendra Khanal** — BSc.IT student, web developer and A
 ## Stack
 
 - Plain HTML / CSS / JavaScript — no frameworks, no build step
-- Inter + system fonts, light/dark theme, scroll reveals, cursor spotlight
+- Cartoon design system: thick outlines, hard offset shadows, sticker colours, Fredoka + Nunito
+- Light/dark theme, scroll reveals, respects `prefers-reduced-motion`
 - Deployed to GitHub Pages via GitHub Actions (`.github/workflows/pages.yml`)
 
 ## Structure
 
 ```
 index.html      — the site
-styles.css      — design system
-script.js       — theme toggle, scroll reveals, cursor spotlight
+styles.css      — cartoon design system
+script.js       — theme toggle, scroll reveals
 404.html        — custom not-found page
-assets/         — images & résumé
-projects/       — live project demos (Flappy Bird, Password Generator)
+assets/         — images
+projects/       — live project demos (Sorting Visualizer, Flappy Bird, Password Generator)
 ```
 
 ## Run locally

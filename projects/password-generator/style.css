@@ -1,41 +1,48 @@
 /**
  * Password Generator
- * Professional styling for secure password generation tool
+ * Matches the portfolio's cartoon design system
  */
 
 /* Root variables for theming */
 :root {
   /* Dark theme (default) */
-  --bg-color: #121212;
-  --container-bg: #1e1e2e;
-  --card-bg: #2d2d3f;
-  --text-color: #f0f0f0;
-  --text-secondary: #b0b0b0;
-  --border-color: #3a3a50;
-  --input-bg: #2a2a3d;
-  --primary-color: #6d5acd;
-  --primary-hover: #5a49b6;
-  --success-color: #10b981;
-  --error-color: #ef4444;
+  --bg-color: #1f1c3a;
+  --dots: rgba(255, 255, 255, 0.06);
+  --container-bg: #332f5c;
+  --card-bg: #413c73;
+  --text-color: #fff6e0;
+  --text-secondary: #c5c0e0;
+  --border-color: #0b0a17;
+  --input-bg: #262345;
+  --primary-color: #ffd23f;
+  --primary-hover: #ffdf70;
+  --on-primary: #1d1b2f;
+  --accent: #b9a2ff;
+  --link: #8fdcff;
+  --success-color: #4fd69c;
+  --error-color: #ff6b8b;
   --warning-color: #f59e0b;
-  --info-color: #3b82f6;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --header-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --info-color: #6fd3f7;
+  --shadow: 8px 8px 0 #0b0a17;
+  --shadow-sm: 3px 3px 0 #0b0a17;
+  --font-display: "Fredoka", "Nunito", system-ui, sans-serif;
 }
 
 /* Light theme */
 body.light-mode {
-  --bg-color: #f5f5f7;
+  --bg-color: #fff6e0;
+  --dots: rgba(29, 27, 47, 0.08);
   --container-bg: #ffffff;
-  --card-bg: #f0f0f4;
-  --text-color: #333333;
-  --text-secondary: #666666;
-  --border-color: #d1d5db;
+  --card-bg: #fff1c2;
+  --text-color: #1d1b2f;
+  --text-secondary: #55526b;
+  --border-color: #1d1b2f;
   --input-bg: #ffffff;
-  --primary-color: #5a49b6;
-  --primary-hover: #4a3aa6;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --header-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --link: #2b3fd4;
+  --success-color: #12804a;
+  --error-color: #d6204b;
+  --shadow: 8px 8px 0 #1d1b2f;
+  --shadow-sm: 3px 3px 0 #1d1b2f;
 }
 
 /* Global styles */
@@ -46,8 +53,11 @@ body.light-mode {
 }
 
 body {
-  font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, sans-serif;
-  background: var(--bg-color);
+  font-family: 'Nunito', 'Segoe UI', Roboto, -apple-system, sans-serif;
+  font-weight: 600;
+  background-color: var(--bg-color);
+  background-image: radial-gradient(var(--dots) 1.5px, transparent 1.6px);
+  background-size: 22px 22px;
   color: var(--text-color);
   line-height: 1.6;
   display: flex;
@@ -62,25 +72,28 @@ body {
   background: var(--container-bg);
   max-width: 700px;
   width: 100%;
-  border-radius: 12px;
+  border: 3px solid var(--border-color);
+  border-radius: 22px;
   box-shadow: var(--shadow);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
 }
 
 /* Header section */
 .app-header {
-  background: var(--primary-color);
-  color: white;
-  padding: 1.5rem 2rem;
-  box-shadow: var(--header-shadow);
+  background: var(--accent);
+  color: var(--on-primary);
+  padding: 1.3rem 2rem;
+  border-bottom: 3px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .app-title {
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.5rem;
   display: flex;
@@ -99,6 +112,22 @@ body {
   flex: 1;
 }
 
+.app-content h2,
+.app-content h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.input-section > p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+:focus-visible {
+  outline: 3px dashed var(--link);
+  outline-offset: 3px;
+}
+
 /* Form elements */
 .form-group {
   margin-bottom: 1.5rem;
@@ -107,7 +136,12 @@ body {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 800;
+}
+
+.checkbox-item label {
+  margin-bottom: 0;
+  font-weight: 600;
 }
 
 input[type="text"],
@@ -115,10 +149,11 @@ input[type="number"],
 select {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border: 3px solid var(--border-color);
+  border-radius: 12px;
   background-color: var(--input-bg);
   color: var(--text-color);
+  font: inherit;
   font-size: 1rem;
   transition: all 0.2s;
 }
@@ -126,8 +161,7 @@ select {
 input:focus,
 select:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(109, 90, 205, 0.2);
+  box-shadow: var(--shadow-sm);
 }
 
 .input-row {
@@ -145,9 +179,11 @@ select:focus {
 .btn {
   padding: 0.75rem 1.5rem;
   background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 6px;
+  color: var(--on-primary);
+  border: 3px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -160,21 +196,29 @@ select:focus {
 
 .btn:hover {
   background: var(--primary-hover);
-  transform: translateY(-1px);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--border-color);
 }
 
 .btn:active {
-  transform: translateY(0);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--border-color);
 }
 
 .btn-secondary {
-  background: transparent;
-  border: 1px solid var(--border-color);
+  background: var(--input-bg);
   color: var(--text-color);
 }
 
 .btn-secondary:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--card-bg);
+}
+
+.app-header .btn-secondary {
+  background: #fff;
+  color: var(--on-primary);
+  border-radius: 50%;
+  padding: 0.7rem;
 }
 
 .btn-success {
@@ -215,10 +259,11 @@ input[type="checkbox"] {
 /* Strength meter */
 #strengthMeter {
   width: 100%;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  background: var(--input-bg);
+  border: 3px solid var(--border-color);
+  border-radius: 999px;
   margin-top: 1rem;
-  height: 8px;
+  height: 18px;
   position: relative;
   overflow: hidden;
 }
@@ -226,7 +271,7 @@ input[type="checkbox"] {
 #strengthBar {
   height: 100%;
   width: 0;
-  border-radius: 4px;
+  border-radius: 999px;
   transition: width 0.3s, background 0.3s;
 }
 
@@ -240,7 +285,8 @@ input[type="checkbox"] {
 #strengthDetails {
   margin-top: 0.75rem;
   background: var(--card-bg);
-  border-radius: 6px;
+  border: 3px solid var(--border-color);
+  border-radius: 12px;
   padding: 1rem;
   display: none;
 }
@@ -273,7 +319,8 @@ input[type="checkbox"] {
 .passwords-container {
   margin-top: 1rem;
   background: var(--card-bg);
-  border-radius: 6px;
+  border: 3px solid var(--border-color);
+  border-radius: 14px;
   overflow: hidden;
 }
 
@@ -281,7 +328,7 @@ input[type="checkbox"] {
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px dashed var(--border-color);
 }
 
 .password-item:last-child {
@@ -289,9 +336,9 @@ input[type="checkbox"] {
 }
 
 .password-index {
-  font-weight: 600;
+  font-weight: 800;
   margin-right: 0.75rem;
-  color: var(--primary-color);
+  color: var(--text-secondary);
   min-width: 1.5rem;
 }
 
@@ -314,8 +361,8 @@ input[type="checkbox"] {
 }
 
 .copy-btn:hover {
-  color: var(--primary-color);
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-color);
+  transform: scale(1.2) rotate(-8deg);
 }
 
 /* Bulk actions */
@@ -323,28 +370,29 @@ input[type="checkbox"] {
   display: none;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 3px dashed var(--border-color);
 }
 
 /* Footer */
 .app-footer {
   padding: 1rem 2rem;
   background: var(--card-bg);
-  border-top: 1px solid var(--border-color);
+  border-top: 3px solid var(--border-color);
   text-align: center;
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
 .app-footer a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: all 0.2s;
+  color: var(--link);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 .app-footer a:hover {
-  text-decoration: underline;
-  color: var(--primary-hover);
+  text-decoration-style: wavy;
 }
 
 /* Notification */
@@ -353,13 +401,15 @@ input[type="checkbox"] {
   bottom: -60px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--success-color);
-  color: white;
+  background: #7be3b4;
+  color: #1d1b2f;
+  font-weight: 800;
   padding: 0.75rem 1.5rem;
-  border-radius: 6px;
+  border: 3px solid var(--border-color);
+  border-radius: 14px;
   z-index: 1000;
   transition: bottom 0.3s ease-in-out;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-sm);
 }
 
 #notification.show {
@@ -369,16 +419,13 @@ input[type="checkbox"] {
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .app-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    padding: 1rem 1.2rem;
   }
-  
-  .app-controls {
-    width: 100%;
-    justify-content: flex-end;
+
+  .app-content {
+    padding: 1.4rem 1.2rem;
   }
-  
+
   .input-row {
     flex-direction: column;
     gap: 1rem;
@@ -388,7 +435,7 @@ input[type="checkbox"] {
     flex-direction: column;
   }
   
-  .btn {
+  .btn-group .btn {
     width: 100%;
   }
  }
