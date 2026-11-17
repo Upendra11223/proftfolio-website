@@ -19,11 +19,11 @@ const writesEl = document.getElementById("writes");
 const statusText = document.getElementById("statusText");
 
 const COLORS = {
-  bar: "#3d4654",
-  compare: "#f0b429",   // currently being compared
-  write: "#ef6351",     // being written/swapped
-  sorted: "#4dbd74",    // confirmed in final position
-  pivot: "#b58cf0"      // quick sort pivot
+  bar: "#6fd3f7",
+  compare: "#ffd23f",   // currently being compared
+  write: "#ff5d8f",     // being written/swapped
+  sorted: "#4fd69c",    // confirmed in final position
+  pivot: "#8f6bff"      // quick sort pivot
 };
 
 let values = [];        // the array being sorted
